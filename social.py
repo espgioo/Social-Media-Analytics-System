@@ -33,14 +33,14 @@ class Social:
         return True
 
     #returning -1 indicates that the post does NOT exist. 
-    def findPost(self, name:str) -> int:
+    def find_post(self, name:str) -> int:
         i = 0
         for post in self._posts:
             for key, value in post.items():
                 if(value == name):
                     return i
             i += 1
-        return -1
+        raise ValueError(f"Post '{name}' not found! Enter name of existing post")
 
 
     def display(self)-> None:
@@ -49,7 +49,7 @@ class Social:
 
     #Displays posts with associated key to make it generic for all classes
     def display_posts(self):
-        i = 1
+        i: int = 1
         for post in self._posts:
             print(f"Post number: {i}")
             for key, value in post.items():
@@ -57,12 +57,52 @@ class Social:
             i += 1
             print()
 
+    
 
+    #for testing purposes, moved this into the class instead of main
+    def create_name(self, prompt: str) -> str:
+        while True: 
+            try:
+                name: str = input(prompt)
+            
+                if name.strip() == "":
+                    raise ValueError("Input cannot be empty!")
+                if len(name) < 3:
+                    raise ValueError("Input must be at least 3 characters!")
+
+                if len(name) > 20:
+                    raise ValueError("Error! Limit characters to 20!")
+            
+                return name
+            
+            
+            except ValueError as e:
+                print(e)
+
+
+    #to avoid complications with testing for input, 
+    #I made this function to replicate create_name purely off fixed input and
+    #not asking for input
+    def check_name_input(self, name: str) -> str:
+        if name.strip() == "":
+            raise ValueError("Input cannot be empty!")
+        if len(name) < 3:
+            raise ValueError("Input must be at least 3 characters!")
+        if len(name) > 20:
+            raise ValueError("Error! Limit characters to 20!")
+        return name
+
+            
     
 #same as class Instagram: public Social{}
 class Instagram(Social):
     def __init__(self, username: str, num_followers: int, posts: int, likes: int, reposts: int):
+        #For hard coding/testing purposes  
+        if username == "":
+            username = super().create_name("Enter your username: ")
+        
         super().__init__(username, num_followers, posts)
+
 
         self._tot_likes = likes
         self._tot_reposts = reposts
@@ -74,9 +114,12 @@ class Instagram(Social):
         print(f"Total likes: {self._tot_likes}")
         print(f"Total reposts: {self._tot_reposts}")
 
+
     #creates post using random generated likes and reposts
     #stores into a
     def create_post(self, name: str)-> bool:
+        if name == "":
+            raise ValueError("input cannot be empty")
 
         likes: int = random.randint(1,100)
         reposts: int = random.randint(1,100)
@@ -139,6 +182,10 @@ class Instagram(Social):
 #same as class Tiktok: public Social{}
 class TikTok(Social):
     def __init__(self, username: str, num_followers: int, posts: int, comments: int, views: int):
+        #For hard coding/testing purposes  
+        if username == "":
+            username = super().create_name("Enter your username: ")
+
         super().__init__(username, num_followers, posts)
 
         self._tot_comments = comments
@@ -154,10 +201,7 @@ class TikTok(Social):
 
     def create_TikTok_post(self, name):
         if name == "":
-            raise ValueError("Post name cannot be empty")
-        
-        #if name.l
-
+            raise ValueError("input cannot be empty")
 
         comments = random.randint(1,100)
         views = random.randint(1,100)
@@ -213,24 +257,33 @@ class TikTok(Social):
         self._posts[index]["Number of comments"] += new_comments
         #updates total number of views from the ACCOUNT next
         self._tot_comments += new_comments
-        print(f"{celeb} reposted your {self._posts[index]["Post name"]} video! Comments & view skyrocketed!")
-        print(f"Current views: {self._posts[index]["Number of Views"]}")
-        print(f"Current comments: {self._posts[index]["Number of comments"]}")
+        print(f"{celeb} reposted your {self._posts[index]['Post name']} video! Comments & view skyrocketed!")
+        print(f"Current views: {self._posts[index]['Number of Views']}")
+        print(f"Current comments: {self._posts[index]['Number of comments']}")
         return index
 
     
 
 class Reddit(Social):
 
-    def __init__(self, username: str, num_followers: int, posts: int, upvote, downvote: int):
+    def __init__(self, username: str, num_followers: int, posts: int, upvote: int, downvote: int):
+        #For hard coding/testing purposes  
+        if username == "":
+            username = super().create_name("Enter your username: ")
         super().__init__(username, num_followers, posts)
         self._tot_upvote = upvote
         self._tot_downvote = downvote
 
+    def display(self):
+        super().display()
+        print(f"Total upvotes: {self._tot_upvote}")
+        print(f"Total downvotes: {self._tot_downvote}")
 
-    def create_reddit_post(self) -> bool:
-        #this ensures a valid name is made!
-        post_name = create_name("Enter post name: ")
+
+
+    def create_reddit_post(self, post_name: str) -> bool:
+        if post_name == "":
+            raise ValueError("input cannot be empty")
         upvote = random.randint(1,100)
         downvote = random.randint(1,100)
         post = {
@@ -248,7 +301,7 @@ class Reddit(Social):
 
     def tot_karma(self):
         if self._tot_upvote <= 0 or self._tot_downvote <= 0:
-            raise ZeroDivisionError("Your account has no posts! Create a new post to recieve stats!") 
+            raise ValueError("Your account has no posts! Create a new post to recieve stats!") 
         acc_karma: int = self._tot_upvote - self._tot_downvote
         print(f"Your total karma for your account is {acc_karma}!")
         return acc_karma
@@ -272,42 +325,3 @@ class Reddit(Social):
         print(f"Your account upvote ratio is {ratio}")
         return float(f"{ratio:.2f}")
 
-
-    
-
-    
-
-# class Marketplace(Social):
-
-#     def __init__(self, username: str, num_followers: int, posts: int, cost: float, sold: int):
-#         super().__init__(username, num_followers, posts)
-#         self._listing_price = cost
-#         self._num_sold = sold
-#         self._tot_profit = profit
-
-
-
-#     def display(self):
-#         #Check if there are posts, if no posts, raise error!!
-#         super().display()
-#         print(f"Item cost: ${self._cost:.2f}")
-#         print(f"Sold: {self._active}")
-
-
-
-#     def sell_post_ratio(self):
-#         avg: float = self._num_sold / self._num_posts
-#         avg *= 100
-#         print(f"Your number of sells to post ratio is {avg:.2f}%!")
-#         return avg
-
-    
-#     def sellItem(self):
-#         #Prompts what post
-#         print(f"What post tare you tryna sell ")
-#         sellPrice = float(input("How much did you sell it for"))
-#         profit: float = self
-
-# place = Marketplace("Ssirski", 100, 10, 0, 0)
-#     place.display()
-#     place.sell_post_ratio()

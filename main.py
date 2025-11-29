@@ -1,27 +1,10 @@
 from social import Instagram, TikTok, Reddit
 
-#using this function to try out exception handiling in python
-#Key notes, can pass the message as a e to then print
-def create_name(prompt: str) -> str:
-    name: str = ""
-    while True: 
-        try:
-            name = input(prompt)
-            if name.strip() == "":
-                raise ValueError("Input cannot be empty!")
-            
-            else:
-                #returns name if exception isn't raised!
-                return name
-
-        except ValueError as e:
-            print(e)
-
 
 def main():
 
-    name = create_name("Enter your username: ")
-    acc = Instagram(name, 0, 0, 0, 0)
+
+    acc = Instagram("", 0, 0, 0, 0)
     acc.display()
 
     acc.promote_account()
@@ -83,11 +66,8 @@ if __name__ == '__main__':
     #     if menu_choice == 1:
     # choice: int = int(input("What type of account would you like to make?"))
     #         print("You chose: Add account")
-    #         # TODO: call your add_account() function here
-
     #     elif menu_choice == 2:
     #         print("You chose: Check account analytics")
-    #         # TODO: call your analytics() function here
 
     #     elif menu_choice == 3:
     #         print("Exiting program...")
