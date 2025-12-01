@@ -1,3 +1,9 @@
+#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
+#CS302 Program 4
+#This is my Social class where I implemented the Instagram, Tiktok and Reddit
+#classes. All classes store their posts in a dictionary-post which allows
+#them to store their respected members
+
 import random
 
 class Social:
@@ -116,8 +122,8 @@ class Instagram(Social):
 
 
     #creates post using random generated likes and reposts
-    #stores into a
-    def create_post(self, name: str)-> bool:
+    #stores into a post dictionary 
+    def create_Instagram_post(self, name: str)-> bool:
         if name == "":
             raise ValueError("input cannot be empty")
 
@@ -150,7 +156,7 @@ class Instagram(Social):
         return average
 
 
-    #Multiplies 
+    #Finds repost rate by total reposts by number of followers
     def repost_rate(self) -> float:
         if self._num_followers <= 0:
             #throw exception if no posts! can't divide by 0
@@ -177,8 +183,6 @@ class Instagram(Social):
     
 
 
-
-
 #same as class Tiktok: public Social{}
 class TikTok(Social):
     def __init__(self, username: str, num_followers: int, posts: int, comments: int, views: int):
@@ -193,13 +197,14 @@ class TikTok(Social):
 
 
 
-    def display(self):
+    def display(self) -> None:
         super().display()
         print(f"Total comments: {self._tot_comments}")
         print(f"Total views: {self._tot_views}")
 
 
-    def create_TikTok_post(self, name):
+    #creates a new tiktok post using a name, randomly generates a views and comments
+    def create_TikTok_post(self, name) -> bool:
         if name == "":
             raise ValueError("input cannot be empty")
 
@@ -217,10 +222,11 @@ class TikTok(Social):
         self._tot_views += views
         self._num_posts += 1
         print(f"Your new post generated {views} views and {comments} comments")
-        return post
+        return True
 
 
-    def comment_view_conversion_rate(self):
+    #calculates conversion rate using comments and views, returns a rate
+    def comment_view_conversion_rate(self) -> float:
         if self._tot_views <= 0:
             raise ZeroDivisionError("Your account has no views! Create a new post to recieve stats!")
         rate: float = self._tot_comments / self._tot_views
@@ -228,8 +234,8 @@ class TikTok(Social):
         print(f"Your comment to view conversion rate is {rate:.2f}%!")
         return rate
 
-
-    def avg_comment_per_post(self):
+    #Finds avg comment per post by dividing total comments by # of posts
+    def avg_comment_per_post(self) -> float:
         if self._num_posts <= 0:
             raise ZeroDivisionError("Your account has no posts! Create a new post to recieve stats!")
         avg: float = self._tot_comments / self._num_posts
@@ -243,7 +249,7 @@ class TikTok(Social):
     #updates views at that particular post
     #This is going to the index number and accesing the value
     #of comments using the "# of comments key"
-    def viral_video(self, index: int):
+    def viral_video(self, index: int) -> int:
         #picks random celeb to "promote" video 
         celeb_list = ["Daniel Caeser", "Travis Scott", "The Marias"]
         celeb = random.choice(celeb_list)
@@ -274,13 +280,13 @@ class Reddit(Social):
         self._tot_upvote = upvote
         self._tot_downvote = downvote
 
-    def display(self):
+    def display(self) -> None:
         super().display()
         print(f"Total upvotes: {self._tot_upvote}")
         print(f"Total downvotes: {self._tot_downvote}")
 
 
-
+    #Creates new reddit post and auto generates new upvotes and downvotes for that post
     def create_reddit_post(self, post_name: str) -> bool:
         if post_name == "":
             raise ValueError("input cannot be empty")
@@ -299,7 +305,8 @@ class Reddit(Social):
         return True
 
 
-    def tot_karma(self):
+    #finds total karma by subtracting upvotes by downvotes
+    def tot_karma(self) -> int:
         if self._tot_upvote <= 0 or self._tot_downvote <= 0:
             raise ValueError("Your account has no posts! Create a new post to recieve stats!") 
         acc_karma: int = self._tot_upvote - self._tot_downvote
@@ -307,21 +314,21 @@ class Reddit(Social):
         return acc_karma
 
 
-
-    def average_upvotes(self):
+    #finds average upvote by dividing total upvotes by number of posts
+    def average_upvotes(self) -> float:
         if self._num_posts <= 0:
             raise ZeroDivisionError("Your account has no posts! Create a new post to recieve stats!") 
         avg = self._tot_upvote / self._num_posts
         print(f"You averaged {avg} upvotes per post!")
-        return avg
+        return float(f"{avg:.2f}")
 
-
+    #divides total upvotes by total votes to find upvote ratio
     def upvote_ratio(self) -> float:
         if self._tot_upvote <= 0 or self._tot_downvote <= 0:
             raise ZeroDivisionError("Your account has no posts! Create a new post to recieve stats!") 
         tot_votes = self._tot_upvote + self._tot_downvote
         #check if votes is == to 0 to prevent divide by zero
-        ratio = self._tot_upvote / tot_votes
+        ratio: float = self._tot_upvote / tot_votes
         print(f"Your account upvote ratio is {ratio}")
         return float(f"{ratio:.2f}")
 

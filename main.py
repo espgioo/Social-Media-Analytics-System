@@ -1,3 +1,9 @@
+#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
+#CS302 Program 4
+#This is my main where I plan to implement the exception handiling for my heirarchy
+#classes. They will be able to make a new account here!
+
+
 from social import Instagram, TikTok, Reddit
 
 

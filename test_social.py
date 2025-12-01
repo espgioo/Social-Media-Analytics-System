@@ -1,3 +1,7 @@
+#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
+#CS302 Program 4
+#This is my pytest suite where I test my core heiarchy 
+
 import pytest
 from social import Social, Instagram, TikTok, Reddit
 
@@ -150,7 +154,7 @@ def test_respost_rate_zero_followers():
 
 def test_find_post():
     s = Instagram("SZA", 1, 1, 2, 2)
-    s.create_post("GIO")
+    s.create_Instagram_post("GIO")
     #Should return 0 indicating first one on array
     assert s.find_post("GIO") == 0
 
@@ -161,13 +165,14 @@ def test_engagement_rate():
     assert s.engagement_rate() == 200
 
 
-
+#Makes sure engagement rate raises error when 0 followers
 def test_engagement_rate_no_followers():
     s = Instagram("LIL YATCHY", 0, 5, 10, 5)
     with pytest.raises(ZeroDivisionError):
         s.engagement_rate()
 
 
+#Makes sure engagement rate raises error when 0 posts
 def test_engagement_rate_no_posts():
     s = Instagram("LIL YATCHY", 10, 0, 10, 5)
     with pytest.raises(ZeroDivisionError):
@@ -178,15 +183,17 @@ def test_engagement_rate_no_posts():
 #Goes through list and will raise value if name is NOT found
 def test_find_post_post_name_does_not_exist():
     s = Instagram("SZA", 1, 1, 2, 2)
-    s.create_post("GIO")
+    s.create_Instagram_post("GIO")
     with pytest.raises(ValueError):
         s.find_post("NOTFOUND")
 
 
-def test_create_post():
+#Creates new IG post and asserts all members are greater than intial contructor
+#values
+def test_create_Instagram_post():
     test = Instagram("Pewdiepie", 1, 1, 1, 1)
 
-    assert test.create_post("NEW GAME") == True
+    assert test.create_Instagram_post("NEW GAME") == True
     assert test._tot_likes > 1
     assert test._tot_reposts > 1
     assert test._num_posts > 1
@@ -196,7 +203,7 @@ def test_create_post_too_little_chars():
     t = Instagram("Pewdiepie", 1, 1, 1, 1)
 
     with pytest.raises(ValueError):
-        t.create_post("")
+        t.create_Instagram_post("")
 
 
 
@@ -305,12 +312,14 @@ def test_tot_karma():
     assert positive.tot_karma() == 25
 
 
+#
 def test_tot_karma_negative_output():
     negative = Reddit("KDOT", 1, 1, 25, 50)
     # 25 -50 = -25; accounts can have negative total karma!!
     assert negative.tot_karma() == -25
 
 
+#Makes sure upvote ratio raises error when no upvotes & downvotes
 def test_tot_karma_no_karma():
     n = Reddit("JCOLE", 1, 1, 0, 0)
     with pytest.raises(ValueError):
@@ -323,6 +332,7 @@ def test_average_upvotes():
     assert test.average_upvotes() == 250
 
 
+#Makes sure average upvotes raises error when 0 posts
 def test_average_upvotes_no_posts():
     n = Reddit("LIL TECCA", 1, 0, 10, 10)
     with pytest.raises(ZeroDivisionError):
@@ -334,6 +344,7 @@ def test_upvote_ratio():
     assert test.upvote_ratio() == .83
 
 
+#Makes sure upvote ratio raises error when 0 posts
 def test_upvote_ratio_no_posts():
     n = Reddit("CORDAE", 1, 0, 0, 0)
     with pytest.raises(ZeroDivisionError):
