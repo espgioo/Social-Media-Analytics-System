@@ -1,6 +1,6 @@
 import pytest
-from bst import Node, BST
-from social import Instagram, TikTok, Reddit
+from src.bst import Node, BST
+from src.social import Instagram, TikTok, Reddit
 
 def test_node_init_and_getters():
     gio = Instagram("Gio", 1, 1, 1, 1)

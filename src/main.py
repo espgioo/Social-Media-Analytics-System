@@ -1,5 +1,5 @@
-from bst import BST
-from social import Instagram, TikTok, Reddit
+from src.bst import BST
+from src.social import Instagram, TikTok, Reddit
 
 
 def main():

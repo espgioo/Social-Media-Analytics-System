@@ -1,6 +1,6 @@
 #This is my pytest suite where I test my core heiarchy 
 import pytest
-from social import Social, Instagram, TikTok, Reddit
+from src.social import Social, Instagram, TikTok, Reddit
 
 #runs test_social_display with all these different inputs
 @pytest.mark.parametrize(
