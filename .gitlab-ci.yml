@@ -6,6 +6,6 @@ run-tests:
   image: python:3.13
   before_script:
     - pip install pipenv
-    - pipenv install --dev
+    - pip install --dev
   script:
-    - pipenv run pytest -v
+    - pip run pytest -v

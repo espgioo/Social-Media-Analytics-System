@@ -16,6 +16,7 @@ class Node:
     def set_right(self, right): self._right = right
     def set_left(self, left): self._left = left
 
+
 class BST:
     def __init__(self): self._root = None
 
@@ -92,7 +93,7 @@ class BST:
         return self.find_IOS(root.get_left())
 
     def direct_to_social_menus(self, name):
-        user = self.retrieve(name)
+        user = self.retrieve(name) #returns node
         social_type = user.get_social_type()
         if social_type == 1: self.Instagram_menu(user.get_social_data())
         elif social_type == 2: self.TikTok_menu(user.get_social_data())
