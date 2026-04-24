@@ -1,100 +1,87 @@
-#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
-#CS302 Program 4
-#This is my main where I plan to implement the exception handiling for my heirarchy
-#classes. They will be able to make a new account here!
+# Giovanni Espindola Gonzalez
+# CS302 Program 5
+# Main driver file
 
-
+from bst import BST
 from social import Instagram, TikTok, Reddit
 
 
 def main():
+    tree = BST()
+
+    while True:
+        print("\nMAIN MENU")
+        print("1. Add account")
+        print("2. Display all accounts")
+        print("3. Go to account")
+        print("4. Remove account")
+        print("5. Exit")
+
+        try:
+            choice = int(input("Enter choice: "))
+        except ValueError:
+            print("Invalid input!")
+            continue
+
+        try:
+            if choice == 1:
+                name = input("Enter username: ")
+
+                print("\nSelect platform:")
+                print("1. Instagram")
+                print("2. TikTok")
+                print("3. Reddit")
+
+                platform = int(input("Choice: "))
+
+                followers = int(input("Followers: "))
+                posts = int(input("Posts: "))
+
+                if platform == 1:
+                    likes = int(input("Total likes: "))
+                    reposts = int(input("Total reposts: "))
+                    account = Instagram(name, followers, posts, likes, reposts)
+
+                elif platform == 2:
+                    comments = int(input("Total comments: "))
+                    views = int(input("Total views: "))
+                    account = TikTok(name, followers, posts, comments, views)
+
+                elif platform == 3:
+                    upvotes = int(input("Total upvotes: "))
+                    downvotes = int(input("Total downvotes: "))
+                    account = Reddit(name, followers, posts, upvotes, downvotes)
+
+                else:
+                    print("Invalid platform!")
+                    continue
+
+                tree.find_dupe(name)  # throws if duplicate
+                tree.insert_node(account, platform)
+                print("Account added!")
+
+            elif choice == 2:
+                tree.display()
+
+            elif choice == 3:
+                name = input("Enter username: ")
+                tree.direct_to_social_menus(name)
+
+            elif choice == 4:
+                name = input("Enter username to remove: ")
+                tree.remove_account(name)
+                print("Account removed!")
+
+            elif choice == 5:
+                print("Exiting...")
+                break
+
+            else:
+                print("Invalid option!")
+
+        except ValueError as e:
+            print(e)
 
 
-    acc = Instagram("", 0, 0, 0, 0)
-    acc.display()
-
-    acc.promote_account()
-    
-
-    post_name = create_name("Enter post name: ")
-    
-    acc.create_post(post_name)
-    acc.display()
-
-    # acc.engagement_rate()
-
-   
-    # #acc.display_posts()
-    # acc.repost_rate()
-   
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-
-
-
-    
-   
-   
-
-    # tok = TikTok("Tammy", 222, 3, 6, 5)
-    # tok.display()
-    # tok.create_TikTok_post("Rocks")
-    # tok.create_TikTok_post("Surfing")
-    # tok.create_TikTok_post("Mountain")
-    # tok.display_posts()
-    # tok.comment_view_conversion_rate()
-    # index = tok.findPost("Mountain")
-    # tok.avg_comment_per_post()
-    # tok.viral_video(index)
-    # tok.display_posts()
-
-    # acc = Reddit("GIOISCOOL", 10, 1, 22, 10)
-    # acc.tot_karma()
-    # acc.create_reddit_post("Cool o nah")
-    # acc.average_upvotes()
-    # acc.upvote_ratio()
-    
-
-
-
-
- # menu_choice: int = 0
-    # print("Welcome to the Social Media analytics website!")
-    # while(menu_choice != 3):
-    #     print("MAIN MENU")
-    #     print("1. Add account\n2. Check account analytics\n3. Exit Program")
-    #     try:
-    #         menu_choice = int(input("Enter menu choice: "))
-    #     except ValueError:
-    #         print("Invalid input! Please enter a VALID number!\n")
-
-    #     if menu_choice == 1:
-    # choice: int = int(input("What type of account would you like to make?"))
-    #         print("You chose: Add account")
-    #     elif menu_choice == 2:
-    #         print("You chose: Check account analytics")
-
-    #     elif menu_choice == 3:
-    #         print("Exiting program...")
-
-    #     elif menu_choice >= 0 or menu_choice > 3:
-    #         print("Invalid option. Enter a VALID menu choice!.")
-
-    #     print()
-
-
-
-#Make a display for the tree which only prints username
-#Prompt users which acc they'll like to access 
-
-# try:
-#         acc.avg_likes_per_post()
-#     except ZeroDivisionError as e:
-#             print(e)
-#Make a big for loop when inside the object you want to work with, Instagram, 
-
-
-
-#When prompting users what acc they want to work with, it will be important to note
-#what type of account they are to promptly bring them to the right menu functions

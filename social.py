@@ -98,6 +98,12 @@ class Social:
             raise ValueError("Error! Limit characters to 20!")
         return name
 
+    def get_name(self) -> str:
+        return self._username
+
+    
+    def __str__(self) -> str:
+        return f"Username: {self._username}\nFollowers: {self._num_followers}\nPosts: {self._num_posts}"
             
     
 #same as class Instagram: public Social{}
@@ -108,11 +114,13 @@ class Instagram(Social):
             username = super().create_name("Enter your username: ")
         
         super().__init__(username, num_followers, posts)
-
-
         self._tot_likes = likes
         self._tot_reposts = reposts
 
+
+    # In Instagram
+    def __str__(self) -> str:
+        return super().__str__() + f"\nTotal likes: {self._tot_likes}\nTotal reposts: {self._tot_reposts}"
 
     #Calls parent's display then goes into for insta account
     def display(self)-> None:
@@ -195,6 +203,9 @@ class TikTok(Social):
         self._tot_comments = comments
         self._tot_views = views
 
+    
+    def __str__(self) -> str:
+        return super().__str__() + f"\nTotal comments: {self._tot_comments}\nTotal views: {self._tot_views}"
 
 
     def display(self) -> None:
@@ -285,6 +296,9 @@ class Reddit(Social):
         print(f"Total upvotes: {self._tot_upvote}")
         print(f"Total downvotes: {self._tot_downvote}")
 
+    
+    def __str__(self) -> str:
+        return super().__str__() + f"\nTotal upvotes: {self._tot_upvote}\nTotal downvotes: {self._tot_downvote}"
 
     #Creates new reddit post and auto generates new upvotes and downvotes for that post
     def create_reddit_post(self, post_name: str) -> bool:
