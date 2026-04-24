@@ -1,0 +1,13 @@
+stages:
+  - test
+
+run-tests:
+  stage: test
+  image: python:3.11
+  before_script:
+    - pip install pipenv
+    - pipenv install --dev
+  script:
+    - pipenv run pytest -v
+
+    
