@@ -1,7 +1,4 @@
-#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
-#CS302 Program 4
 #This is my pytest suite where I test my core heiarchy 
-
 import pytest
 from social import Social, Instagram, TikTok, Reddit
 

@@ -1,7 +1,3 @@
-# Giovanni Espindola Gonzalez
-# CS302 Program 5
-# Main driver file
-
 from bst import BST
 from social import Instagram, TikTok, Reddit
 

@@ -1,6 +1,5 @@
-# Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
-# CS302 Program 5
-# Recovered/reconstructed BST class.
+
+#BST class.
 
 class Node:
     def __init__(self, data, choice: int):

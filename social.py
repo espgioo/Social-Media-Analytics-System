@@ -1,5 +1,3 @@
-#Giovanni Espindola Gonzalez - 977879121 - giovanne@pdx.edu
-#CS302 Program 4
 #This is my Social class where I implemented the Instagram, Tiktok and Reddit
 #classes. All classes store their posts in a dictionary-post which allows
 #them to store their respected members
