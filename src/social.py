@@ -344,3 +344,39 @@ class Reddit(Social):
         print(f"Your account upvote ratio is {ratio}")
         return float(f"{ratio:.2f}")
 
+
+
+class Linkedin(Social):
+    def __init__(self,  username: str, num_followers: int, posts: int, connections : int, impressions : int, work : bool):
+        super().__init__(username, num_followers, posts)
+        self._connections = connections      # like followers but professional
+        self._impressions = impressions      # how many times posts were seen
+        self._work = work                    # Open to work Availability 
+
+
+    def open_to_work(self) -> bool:
+        self._work = not self._work  # flips True/False each call
+        if self._work:
+            print(f"{self._username} is now open to work!")
+        else:
+            print(f"{self._username} is no longer open to work!")
+        return self._work
+    
+    def avg_impressions_per_post(self) -> float:
+        if self._num_posts <= 0:
+            raise ZeroDivisionError("No posts found! Make a new post to receive stats!")
+        avg = self._impressions / self._num_posts
+        avg = float(f"{avg:.2f}")
+        print(f"Your posts average {avg} impressions each!")
+        return avg
+
+
+    def recruiter_boost(self, index: int) -> int:
+        recruiter_list = ["Google", "Apple", "Microsoft"]
+        recruiter = random.choice(recruiter_list)
+        new_impressions = random.randint(1000, 50000)
+        self._posts[index]["impressions"] += new_impressions
+        self._impressions += new_impressions
+        print(f"A recruiter from {recruiter} shared your post!")
+        print(f"Current impressions: {self._posts[index]['impressions']}")
+        return index
