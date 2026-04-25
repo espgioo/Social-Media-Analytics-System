@@ -1,21 +1,47 @@
+#Pipeline configuration file that automatically executes on every push
 name: Social Media Analytics CI
 
 on: [push]
 
+env:
+  # global variables available to all jobs
+  PYTHON_VERSION: '3.13'
+  TEST_DIR: 'tests/'
+  REPORT_PATH: 'reports/report.html'
+
 jobs:
+  # a pipeline can have multiple jobs (test, build, deploy etc)
+  # here we only have one called "test"
+
   test:
+
+    # makes a brand new Linux machine to test
+    # Proves code is reliable as it starts from scratch each time
     runs-on: ubuntu-latest
     steps:
+      # downloads repository code onto the linux machine
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # installing pinned version of phyton so it won't break if python updates
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: ${{ env.PYTHON_VERSION }}
 
+      # installs all dependencies from requirements.txt onto the linux machine
       - name: Install dependencies
-        run: pip install pytest
+        run: pip install -r requirements.txt
 
+      # runs all tests in tests/ folder and generates a visual HTML report
+      # if ANY test fails the pipeline fails and GitHub shows a red X
       - name: Run tests
-        run: pytest tests/ -v
+        run: pytest ${{ env.TEST_DIR }} -v --html=${{ env.REPORT_PATH }} --self-contained-html
+
+      # saves the HTML report before GitHub destroys the VM
+      # downloadable from the Actions tab under "Artifacts"
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: ${{ env.REPORT_PATH }}
